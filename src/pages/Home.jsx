@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import IngredientInput from '../components/IngredientInput'
+import RecipeCard from '../components/RecipeCard'
 import useRecipes from '../hooks/useRecipes'
 
 function Home() {
@@ -18,8 +19,10 @@ function Home() {
     search(updated)
   }
 
+  const [featured, ...rest] = recipes
+
   return (
-    <div className="min-h-screen bg-paper flex flex-col items-center pt-20 px-4">
+    <div className="min-h-screen bg-paper flex flex-col items-center pt-20 px-4 pb-20">
       <h1 className="font-serif text-6xl text-ink tracking-tight mb-8">
         What's in there?
       </h1>
@@ -41,25 +44,30 @@ function Home() {
       )}
 
       {error && (
-        <p className="font-mono text-xs uppercase text-tomato mt-4">
-          Something went wrong: {error}
+        <p className="font-mono text-xs uppercase text-tomato mt-4 text-center max-w-md">
+          {error}
         </p>
       )}
 
-      {/* Temporary basic results list — we'll replace with proper cards next */}
-      <div className="w-full max-w-2xl mt-8 flex flex-col gap-2">
-        {recipes.map((recipe) => (
-          <div
-            key={recipe.idMeal}
-            className="border-[1.5px] border-ink rounded p-3 flex justify-between items-center bg-paper-deep"
-          >
-            <span className="font-sans text-ink">{recipe.strMeal}</span>
-            <span className="font-mono text-xs text-ink-soft">
-              {recipe.matchCount}/{recipe.totalIngredients}
-            </span>
-          </div>
-        ))}
-      </div>
+      {!loading && ingredients.length > 0 && recipes.length === 0 && !error && (
+        <p className="font-sans text-ink-soft mt-8 text-center max-w-md">
+          Nothing matches all of that. Drop one ingredient and we'll try again.
+        </p>
+      )}
+
+      {recipes.length > 0 && (
+        <div className="w-full max-w-4xl mt-8 flex flex-col gap-6">
+          {featured && <RecipeCard recipe={featured} featured />}
+
+          {rest.length > 0 && (
+            <div className="flex flex-col gap-2">
+              {rest.map((recipe) => (
+                <RecipeCard key={recipe.idMeal} recipe={recipe} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
