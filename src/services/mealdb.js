@@ -1,4 +1,4 @@
-const BASE_URL = 'https://www.themealdb.com/api/json/v1/1'
+const BASE_URL = '/api/mealdb'
 
 // Search recipes by a single ingredient
 export async function searchByIngredient(ingredient) {
@@ -30,4 +30,20 @@ export async function getCategories() {
   if (!res.ok) throw new Error('Failed to fetch categories')
   const data = await res.json()
   return data.meals || []
+}
+
+// Turns TheMealDB's messy strIngredient1..20 fields into a clean array
+export function extractIngredients(meal) {
+  const ingredients = []
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`]
+    const measure = meal[`strMeasure${i}`]
+    if (ingredient && ingredient.trim()) {
+      ingredients.push({
+        name: ingredient.trim(),
+        measure: measure ? measure.trim() : '',
+      })
+    }
+  }
+  return ingredients
 }
