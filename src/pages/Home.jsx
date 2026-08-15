@@ -2,10 +2,16 @@ import { useState } from 'react'
 import IngredientInput from '../components/IngredientInput'
 import RecipeCard from '../components/RecipeCard'
 import useRecipes from '../hooks/useRecipes'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
   const [ingredients, setIngredients] = useState([])
   const { recipes, loading, error, search } = useRecipes()
+  const navigate = useNavigate()
+
+  function handleCardClick(id) {
+    navigate(`/recipe/${id}`, { state: { ingredients } })
+  }
 
   function handleAdd(item) {
     const updated = [...ingredients, item]
@@ -57,12 +63,12 @@ function Home() {
 
       {recipes.length > 0 && (
         <div className="w-full max-w-4xl mt-8 flex flex-col gap-6">
-          {featured && <RecipeCard recipe={featured} featured />}
+          {featured && <RecipeCard recipe={featured} featured onClick={() => handleCardClick(featured.idMeal)} />}
 
           {rest.length > 0 && (
             <div className="flex flex-col gap-2">
               {rest.map((recipe) => (
-                <RecipeCard key={recipe.idMeal} recipe={recipe} />
+                <RecipeCard key={recipe.idMeal} recipe={recipe} onClick={() => handleCardClick(recipe.idMeal)} />
               ))}
             </div>
           )}
