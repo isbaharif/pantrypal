@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { getRecipeById, extractIngredients } from '../services/mealdb'
 import { enhanceRecipe } from '../services/ai'
+import FavouriteButton from '../components/FavouriteButton'
 
 function RecipeDetail() {
   const { id } = useParams()
@@ -77,18 +78,22 @@ function RecipeDetail() {
   const steps = recipe.strInstructions
     .split(/\r?\n+/)
     .map((s) => s.trim())
-    .filter(Boolean)
+    .filter((s) => s && !/^step\s*\d*:?$/i.test(s))
 
   return (
-    <div className="min-h-screen bg-paper px-4 py-12">
+    <div className="min-h-screen bg-paper px-4 pt-8 pb-12">
       <div className="max-w-5xl mx-auto">
         <Link to="/" className="font-mono text-xs uppercase text-ink-soft hover:text-tomato">
           ← Back to the pantry
         </Link>
 
-        <h1 className="font-serif text-5xl text-ink tracking-tight mt-4 mb-8">
-          {recipe.strMeal}
+        <h1 className="font-serif text-5xl text-ink tracking-tight mt-4 mb-4">
+        {recipe.strMeal}
         </h1>
+
+        <div className="mb-8">
+        <FavouriteButton meal={recipe} />
+        </div>
 
         {enhancementLoading && (
           <p className="font-mono text-xs uppercase text-ink-soft mb-6">

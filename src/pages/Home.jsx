@@ -3,6 +3,7 @@ import IngredientInput from '../components/IngredientInput'
 import RecipeCard from '../components/RecipeCard'
 import useRecipes from '../hooks/useRecipes'
 import { useNavigate } from 'react-router-dom'
+import { DoodleScribble } from '../components/Doodles'
 
 function Home() {
   const [ingredients, setIngredients] = useState([])
@@ -28,10 +29,11 @@ function Home() {
   const [featured, ...rest] = recipes
 
   return (
-    <div className="min-h-screen bg-paper flex flex-col items-center pt-20 px-4 pb-20">
-      <h1 className="font-serif text-6xl text-ink tracking-tight mb-8">
+    <div className="min-h-screen flex flex-col items-center pt-12 px-4 pb-20 relative">
+      <h1 className="font-serif text-6xl text-ink tracking-tight mb-2">
         What's in there?
       </h1>
+      <DoodleScribble className="w-40 h-4 text-tomato mb-6" />
 
       <IngredientInput
         ingredients={ingredients}
@@ -62,7 +64,7 @@ function Home() {
       )}
 
       {recipes.length > 0 && (
-        <div className="w-full max-w-4xl mt-8 flex flex-col gap-6">
+        <div className="w-full max-w-4xl mt-8 flex flex-col gap-6 relative z-10">
           {featured && <RecipeCard recipe={featured} featured onClick={() => handleCardClick(featured.idMeal)} />}
 
           {rest.length > 0 && (
