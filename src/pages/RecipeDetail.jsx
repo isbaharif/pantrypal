@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { getRecipeById, extractIngredients } from '../services/mealdb'
 import { enhanceRecipe } from '../services/ai'
+import { getSubstitute } from '../utils/substitutes'
 import FavouriteButton from '../components/FavouriteButton'
 
 function RecipeDetail() {
@@ -55,7 +56,7 @@ function RecipeDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-paper flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <p className="font-mono text-xs uppercase text-ink-soft">Checking the back of the fridge…</p>
       </div>
     )
@@ -63,7 +64,7 @@ function RecipeDetail() {
 
   if (error || !recipe) {
     return (
-      <div className="min-h-screen bg-paper flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="font-serif text-2xl text-ink">{error}</p>
         <Link to="/" className="font-mono text-xs uppercase text-tomato underline">
           Back to the pantry
@@ -81,18 +82,18 @@ function RecipeDetail() {
     .filter((s) => s && !/^step\s*\d*:?$/i.test(s))
 
   return (
-    <div className="min-h-screen bg-paper px-4 pt-8 pb-12">
+    <div className="min-h-screen px-4 pt-8 pb-12">
       <div className="max-w-5xl mx-auto">
         <Link to="/" className="font-mono text-xs uppercase text-ink-soft hover:text-tomato">
           ← Back to the pantry
         </Link>
 
         <h1 className="font-serif text-5xl text-ink tracking-tight mt-4 mb-4">
-        {recipe.strMeal}
+          {recipe.strMeal}
         </h1>
 
         <div className="mb-8">
-        <FavouriteButton meal={recipe} />
+          <FavouriteButton meal={recipe} />
         </div>
 
         {enhancementLoading && (
@@ -116,21 +117,27 @@ function RecipeDetail() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-[280px_1fr] gap-8">
+        <div className="grid md:grid-cols-[320px_1fr] gap-8">
           <div className="md:sticky md:top-8 self-start border-[1.5px] border-ink rounded bg-paper-deep p-5">
             <p className="font-mono text-xs uppercase tracking-wider text-ink-soft mb-3">
               Ingredients
             </p>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-3">
               {ingredients.map((ing) => {
                 const has = userSet.has(ing.name.toLowerCase())
+                const substitute = !has ? getSubstitute(ing.name) : null
+
                 return (
-                  <li
-                    key={ing.name}
-                    className={`font-sans text-sm ${has ? 'text-brine' : 'text-peel'}`}
-                  >
-                    {has ? '✓ ' : '○ '}
-                    {ing.name} {ing.measure && `— ${ing.measure}`}
+                  <li key={ing.name} className="font-sans text-sm">
+                    <span className={has ? 'text-brine' : 'text-peel'}>
+                      {has ? '✓ ' : '○ '}
+                      {ing.name} {ing.measure && `— ${ing.measure}`}
+                    </span>
+                    {substitute && (
+                      <p className="text-xs text-ink-soft mt-0.5 pl-4">
+                        → try instead: {substitute}
+                      </p>
+                    )}
                   </li>
                 )
               })}
