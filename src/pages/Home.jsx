@@ -4,9 +4,13 @@ import RecipeCard from '../components/RecipeCard'
 import useRecipes from '../hooks/useRecipes'
 import { useNavigate } from 'react-router-dom'
 import { DoodleScribble } from '../components/Doodles'
+import CuisinePicker from '../components/CuisinePicker'
+import DietaryFilter from '../components/DietaryFilter'
 
 function Home() {
   const [ingredients, setIngredients] = useState([])
+  const [cuisine, setCuisine] = useState(null)
+  const [dietary, setDietary] = useState(null)
   const { recipes, loading, error, search } = useRecipes()
   const navigate = useNavigate()
 
@@ -17,16 +21,24 @@ function Home() {
   function handleAdd(item) {
     const updated = [...ingredients, item]
     setIngredients(updated)
-    search(updated)
+    search(updated, { cuisine, dietary })
   }
 
   function handleRemove(item) {
     const updated = ingredients.filter((i) => i !== item)
     setIngredients(updated)
-    search(updated)
+    search(updated, { cuisine, dietary })
   }
 
-  const [featured, ...rest] = recipes
+  function handleCuisineSelect(newCuisine) {
+    setCuisine(newCuisine)
+    search(ingredients, { cuisine: newCuisine, dietary })
+  }
+
+  function handleDietarySelect(newDietary) {
+    setDietary(newDietary)
+    search(ingredients, { cuisine, dietary: newDietary })
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center pt-12 px-4 pb-20 relative">
@@ -40,6 +52,10 @@ function Home() {
         onAdd={handleAdd}
         onRemove={handleRemove}
       />
+
+      <CuisinePicker selected={cuisine} onSelect={handleCuisineSelect} />
+
+      <DietaryFilter selected={dietary} onSelect={handleDietarySelect} />
 
       <p className="font-mono text-xs uppercase tracking-wider text-tomato mt-8">
         {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} within reach

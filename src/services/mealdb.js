@@ -47,3 +47,17 @@ export function extractIngredients(meal) {
   }
   return ingredients
 }
+
+export async function searchByArea(area) {
+  const res = await fetch(`${BASE_URL}/filter.php?a=${encodeURIComponent(area)}`)
+  if (!res.ok) throw new Error('Failed to fetch recipes for that cuisine')
+  const data = await res.json()
+  return data.meals || []
+}
+
+export async function searchByCategory(category) {
+  const res = await fetch(`${BASE_URL}/filter.php?c=${encodeURIComponent(category)}`)
+  if (!res.ok) throw new Error('Failed to fetch recipes for that category')
+  const data = await res.json()
+  return data.meals || []
+}

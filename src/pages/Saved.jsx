@@ -31,7 +31,7 @@ function Saved() {
   }
 
   return (
-    <div className="min-h-screen bg-paper px-4 pt-8 pb-12">
+    <div className="min-h-screen px-4 pt-8 pb-12">
       <div className="max-w-3xl mx-auto">
         <h1 className="font-serif text-5xl text-ink tracking-tight mb-8">
           Filed away
