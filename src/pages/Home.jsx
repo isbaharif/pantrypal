@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import IngredientInput from '../components/IngredientInput'
 import RecipeCard from '../components/RecipeCard'
+import CuisinePicker from '../components/CuisinePicker'
+import DietaryFilter from '../components/DietaryFilter'
 import useRecipes from '../hooks/useRecipes'
 import { useNavigate } from 'react-router-dom'
 import { DoodleScribble } from '../components/Doodles'
-import CuisinePicker from '../components/CuisinePicker'
-import DietaryFilter from '../components/DietaryFilter'
+import { findDietaryConflicts, getConflictMessage } from '../utils/dietaryConflicts'
 
 function Home() {
   const [ingredients, setIngredients] = useState([])
   const [cuisine, setCuisine] = useState(null)
   const [dietary, setDietary] = useState(null)
+  const [sortMode, setSortMode] = useState('match') // 'match' | 'gaps' | 'fastest'
   const { recipes, loading, error, search } = useRecipes()
   const navigate = useNavigate()
 
@@ -40,6 +42,16 @@ function Home() {
     search(ingredients, { cuisine, dietary: newDietary })
   }
 
+  const sortedRecipes = [...recipes].sort((a, b) => {
+    if (sortMode === 'gaps') return a.missing.length - b.missing.length
+    if (sortMode === 'fastest') return a.totalIngredients - b.totalIngredients
+    return b.matchCount - a.matchCount
+  })
+  const [featured, ...rest] = sortedRecipes
+
+  const conflicts = findDietaryConflicts(ingredients, dietary)
+  const conflictMessage = conflicts.length > 0 ? getConflictMessage(dietary, conflicts) : null
+
   return (
     <div className="min-h-screen flex flex-col items-center pt-12 px-4 pb-20 relative">
       <h1 className="font-serif text-6xl text-ink tracking-tight mb-2">
@@ -53,13 +65,34 @@ function Home() {
         onRemove={handleRemove}
       />
 
+    <div className="flex gap-4 mt-6">
       <CuisinePicker selected={cuisine} onSelect={handleCuisineSelect} />
-
       <DietaryFilter selected={dietary} onSelect={handleDietarySelect} />
+    </div>
 
       <p className="font-mono text-xs uppercase tracking-wider text-tomato mt-8">
         {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} within reach
       </p>
+
+      {recipes.length > 0 && (
+        <div className="flex gap-2 mt-3">
+          {[
+            { key: 'match', label: 'Best match' },
+            { key: 'gaps', label: 'Fewest gaps' },
+            { key: 'fastest', label: 'Fastest' },
+          ].map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setSortMode(opt.key)}
+              className={`font-mono text-xs uppercase tracking-wide px-3 py-1 border-[1.5px] border-ink rounded transition ${
+                sortMode === opt.key ? 'bg-ink text-paper' : 'bg-paper text-ink-soft hover:text-ink'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {loading && (
         <p className="font-mono text-xs uppercase text-ink-soft mt-4">
@@ -67,9 +100,9 @@ function Home() {
         </p>
       )}
 
-      {error && (
-        <p className="font-mono text-xs uppercase text-tomato mt-4 text-center max-w-md">
-          {error}
+      {conflictMessage && (
+        <p className="font-sans text-sm text-tomato mt-4 text-center max-w-md">
+          {conflictMessage}
         </p>
       )}
 

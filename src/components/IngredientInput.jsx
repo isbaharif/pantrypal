@@ -39,7 +39,7 @@ function IngredientInput({ ingredients, onAdd, onRemove }) {
             <button
               key={item}
               onClick={() => onRemove(item)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-tomato text-paper border-[1.5px] border-ink rounded font-mono text-xs uppercase tracking-wide"
+              className="flex items-center gap-2 px-3 py-1.5 bg-tomato text-paper border-[1.5px] border-ink rounded font-mono text-xs uppercase tracking-wide animate-chip-in hover:scale-105 active:scale-95 transition-transform"
               style={{ boxShadow: '3px 3px 0 var(--color-ink)' }}
             >
               {item}
