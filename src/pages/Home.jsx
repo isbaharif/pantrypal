@@ -54,9 +54,9 @@ function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center pt-12 px-4 pb-20 relative">
-      <h1 className="font-serif text-6xl text-ink tracking-tight mb-2">
-        What's in there?
-      </h1>
+    <h1 className="font-serif text-4xl md:text-6xl text-ink tracking-tight mb-2 text-center">
+      What's in there?
+    </h1>
       <DoodleScribble className="w-40 h-4 text-tomato mb-6" />
 
       <IngredientInput
@@ -65,17 +65,16 @@ function Home() {
         onRemove={handleRemove}
       />
 
-    <div className="flex gap-4 mt-6">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 w-full max-w-2xl">
       <CuisinePicker selected={cuisine} onSelect={handleCuisineSelect} />
       <DietaryFilter selected={dietary} onSelect={handleDietarySelect} />
     </div>
-
       <p className="font-mono text-xs uppercase tracking-wider text-tomato mt-8">
         {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} within reach
       </p>
 
       {recipes.length > 0 && (
-        <div className="flex gap-2 mt-3">
+        <div className="flex flex-wrap justify-center gap-2 mt-3 px-4">
           {[
             { key: 'match', label: 'Best match' },
             { key: 'gaps', label: 'Fewest gaps' },

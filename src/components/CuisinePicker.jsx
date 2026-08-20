@@ -6,21 +6,16 @@ const CUISINES = [
 
 function CuisinePicker({ selected, onSelect }) {
   return (
-    <div className="flex flex-col gap-1">
-      <label className="font-mono text-xs uppercase tracking-wider text-ink-soft">
-        Cuisine
-      </label>
-      <select
-        value={selected || ''}
-        onChange={(e) => onSelect(e.target.value || null)}
-        className="px-3 py-2 bg-paper-deep border-[1.5px] border-ink rounded font-mono text-xs uppercase tracking-wide text-ink focus:outline-none focus:ring-2 focus:ring-ink cursor-pointer"
-      >
-        <option value="">Any</option>
-        {CUISINES.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))}
-      </select>
-    </div>
+    <select
+      value={selected || ''}
+      onChange={(e) => onSelect(e.target.value || null)}
+      className="px-2.5 py-1.5 bg-paper border-[1.5px] border-ink rounded font-mono text-[11px] uppercase tracking-wide text-ink focus:outline-none focus:ring-2 focus:ring-ink cursor-pointer"
+    >
+      <option value="">Cuisine: any</option>
+      {CUISINES.map((c) => (
+        <option key={c} value={c}>{c}</option>
+      ))}
+    </select>
   )
 }
 

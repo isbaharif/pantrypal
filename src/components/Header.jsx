@@ -1,24 +1,19 @@
 import { Link } from 'react-router-dom'
 
-function Header() {
+function Header({ onMenuClick }) {
   return (
     <header className="border-b-[1.5px] border-ink bg-paper">
-      <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="font-serif text-2xl text-ink tracking-tight">
-          What's Cookin
-        </Link>
-        <div className="flex items-center gap-6">
-          <Link
-            to="/my-recipes"
-            className="font-mono text-xs uppercase tracking-wide text-ink-soft hover:text-tomato transition"
+      <div className="max-w-5xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onMenuClick}
+            className="font-mono text-ink text-xl leading-none"
+            aria-label="Open menu"
           >
-            Your recipes
-          </Link>
-          <Link
-            to="/saved"
-            className="font-mono text-xs uppercase tracking-wide text-ink-soft hover:text-tomato transition"
-          >
-            Filed away
+            ☰
+          </button>
+          <Link to="/" className="font-serif text-xl md:text-2xl text-ink tracking-tight">
+            What's Cookin
           </Link>
         </div>
       </div>

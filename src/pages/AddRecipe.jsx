@@ -125,7 +125,7 @@ function AddRecipe() {
         <p className="font-mono text-xs uppercase tracking-wider text-tomato mb-2">
           Step {stage} of 3
         </p>
-        <h1 className="font-serif text-4xl text-ink tracking-tight mb-8">
+        <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight mb-8">
           {stage === 1 && 'The basics'}
           {stage === 2 && 'The stuff'}
           {stage === 3 && 'The steps'}

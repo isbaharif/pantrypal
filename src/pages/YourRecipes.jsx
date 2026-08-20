@@ -18,13 +18,13 @@ function YourRecipes() {
   return (
     <div className="min-h-screen px-4 pt-8 pb-12">
       <div className="max-w-3xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-serif text-5xl text-ink tracking-tight">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8">
+          <h1 className="font-serif text-3xl md:text-5xl text-ink tracking-tight">
             Your recipes
           </h1>
           <Link
             to="/add-recipe"
-            className="font-mono text-xs uppercase tracking-wide text-paper bg-tomato px-4 py-2 rounded border-[1.5px] border-ink"
+            className="font-mono text-xs uppercase tracking-wide text-paper bg-tomato px-4 py-2 rounded border-[1.5px] border-ink self-start"
             style={{ boxShadow: '3px 3px 0 var(--color-ink)' }}
           >
             + Add one

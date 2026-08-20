@@ -76,10 +76,10 @@ function RecipeDetail() {
   const ingredients = extractIngredients(recipe)
   const userSet = new Set(userIngredients.map((i) => i.toLowerCase()))
 
-  const steps = recipe.strInstructions
+    const steps = recipe.strInstructions
     .split(/\r?\n+/)
     .map((s) => s.trim())
-    .filter((s) => s && !/^step\s*\d*:?$/i.test(s))
+    .filter((s) => s && !/^step\s*\d*:?$/i.test(s) && !/^\d+\.?$/.test(s))
 
   return (
     <div className="min-h-screen px-4 pt-8 pb-12">
@@ -88,7 +88,7 @@ function RecipeDetail() {
           ← Back to the pantry
         </Link>
 
-        <h1 className="font-serif text-5xl text-ink tracking-tight mt-4 mb-4">
+        <h1 className="font-serif text-3xl md:text-5xl text-ink tracking-tight mt-4 mb-4">
           {recipe.strMeal}
         </h1>
 
@@ -104,7 +104,7 @@ function RecipeDetail() {
 
         {enhancement && (
           <div className="mb-8 max-w-2xl">
-            <p className="font-sans text-lg text-ink-soft italic mb-4">
+            <p className="font-sans text-base md:text-lg text-ink-soft italic mb-4">
               {enhancement.blurb}
             </p>
             <ul className="flex flex-col gap-1">
@@ -117,8 +117,8 @@ function RecipeDetail() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-[320px_1fr] gap-8">
-          <div className="md:sticky md:top-8 self-start border-[1.5px] border-ink rounded bg-paper-deep p-5">
+        <div className="grid md:grid-cols-[320px_1fr] gap-6 md:gap-8">
+          <div className="md:sticky md:top-8 self-start border-[1.5px] border-ink rounded bg-paper-deep p-4 md:p-5">
             <p className="font-mono text-xs uppercase tracking-wider text-ink-soft mb-3">
               Ingredients
             </p>
@@ -148,12 +148,12 @@ function RecipeDetail() {
             {steps.map((step, i) => (
               <div
                 key={i}
-                className="border-[1.5px] border-ink rounded bg-paper-deep p-5 flex gap-4"
+                className="border-[1.5px] border-ink rounded bg-paper-deep p-4 md:p-5 flex gap-3 md:gap-4"
               >
-                <span className="font-serif text-3xl text-tomato flex-shrink-0">
+                <span className="font-serif text-2xl md:text-3xl text-tomato flex-shrink-0">
                   {i + 1}
                 </span>
-                <p className="font-sans text-ink leading-relaxed">{step}</p>
+                <p className="font-sans text-sm md:text-base text-ink leading-relaxed">{step}</p>
               </div>
             ))}
           </div>

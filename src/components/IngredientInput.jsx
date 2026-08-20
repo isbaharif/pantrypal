@@ -22,7 +22,7 @@ function IngredientInput({ ingredients, onAdd, onRemove }) {
   }
 
   return (
-    <div className="w-full max-w-2xl">
+    <div className="w-full max-w-2xl px-2 sm:px-0">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
