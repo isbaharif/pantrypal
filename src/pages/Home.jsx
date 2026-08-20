@@ -59,13 +59,14 @@ function Home() {
     </h1>
       <DoodleScribble className="w-40 h-4 text-tomato mb-6" />
 
-      <IngredientInput
-        ingredients={ingredients}
-        onAdd={handleAdd}
-        onRemove={handleRemove}
-      />
+    <IngredientInput
+      ingredients={ingredients}
+      onAdd={handleAdd}
+      onRemove={handleRemove}
+    />
 
-    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 w-full max-w-2xl">
+    <div className="flex flex-wrap items-center gap-2 mt-4">
+      <span className="font-mono text-[11px] uppercase tracking-wide text-ink-soft">Filter:</span>
       <CuisinePicker selected={cuisine} onSelect={handleCuisineSelect} />
       <DietaryFilter selected={dietary} onSelect={handleDietarySelect} />
     </div>
