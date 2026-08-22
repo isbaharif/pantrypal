@@ -34,3 +34,45 @@ body {
 .animate-chip-in {
   animation: chip-in 150ms ease-out;
 }
+
+@keyframes steam-rise {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: translateY(-14px); opacity: 0; }
+}
+
+.animate-steam-1 {
+  animation: steam-rise 1.6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.animate-steam-2 {
+  animation: steam-rise 1.6s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+.animate-steam-3 {
+  animation: steam-rise 1.6s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+@keyframes drop-in {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  55% { transform: translateY(78px); }
+  65% { transform: translateY(70px); }
+  75% { transform: translateY(78px); }
+  90% { opacity: 1; }
+  100% { transform: translateY(78px); opacity: 0; }
+}
+
+.animate-drop-1 {
+  animation: drop-in 1.8s ease-in infinite;
+  animation-delay: 0s;
+}
+.animate-drop-2 {
+  animation: drop-in 1.8s ease-in infinite;
+  animation-delay: 0.5s;
+}
+.animate-drop-3 {
+  animation: drop-in 1.8s ease-in infinite;
+  animation-delay: 1s;
+}

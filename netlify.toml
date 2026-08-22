@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/api/mealdb/*"
+  to = "https://www.themealdb.com/api/json/v1/1/:splat"
+  status = 200
+  force = true

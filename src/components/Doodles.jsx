@@ -104,3 +104,41 @@ export function DoodleBackground() {
     </svg>
   )
 }
+
+export function DoodleTimer({ className = '' }) {
+  return (
+    <svg viewBox="0 0 50 55" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="25" cy="32" r="20" />
+      <path d="M25 32 L25 20 M25 32 L34 38" />
+      <path d="M18 3 L32 3 M25 3 L25 10" />
+    </svg>
+  )
+}
+
+export function DoodleKnife({ className = '' }) {
+  return (
+    <svg viewBox="0 0 90 30" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 22 L55 22 L82 10 L82 18 L55 26 L5 26 Z" />
+    </svg>
+  )
+}
+
+export function DoodleOven({ className = '' }) {
+  return (
+    <svg viewBox="0 0 60 55" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="54" height="49" rx="3" />
+      <rect x="10" y="20" width="40" height="24" rx="2" />
+      <circle cx="12" cy="11" r="2" />
+      <circle cx="20" cy="11" r="2" />
+    </svg>
+  )
+}
+
+export function DoodlePlate({ className = '' }) {
+  return (
+    <svg viewBox="0 0 60 60" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="30" cy="30" r="27" />
+      <circle cx="30" cy="30" r="16" />
+    </svg>
+  )
+}

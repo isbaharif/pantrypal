@@ -1,4 +1,17 @@
+import { useState } from 'react'
+import { getUserName, setUserName } from '../utils/userName'
+
 function Settings() {
+  const [name, setName] = useState(getUserName())
+  const [saved, setSaved] = useState(false)
+
+  function handleSave(e) {
+    e.preventDefault()
+    setUserName(name)
+    setSaved(true)
+    setTimeout(() => setSaved(false), 1500)
+  }
+
   function handleClearCache() {
     sessionStorage.clear()
     alert('Cleared cached recipe tips for this session.')
@@ -12,6 +25,27 @@ function Settings() {
         </h1>
 
         <div className="flex flex-col gap-6">
+          <div className="border-[1.5px] border-ink rounded bg-paper-deep p-5">
+            <p className="font-mono text-xs uppercase tracking-wider text-ink-soft mb-2">
+              What do we call you?
+            </p>
+            <form onSubmit={handleSave} className="flex gap-2">
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className="flex-1 px-4 py-2 bg-paper border-[1.5px] border-ink rounded text-ink placeholder-ink-soft focus:outline-none focus:ring-2 focus:ring-ink"
+              />
+              <button
+                type="submit"
+                className="font-mono text-xs uppercase tracking-wide px-4 py-2 border-[1.5px] border-ink rounded bg-tomato text-paper hover:opacity-90 transition"
+              >
+                {saved ? 'Saved ✓' : 'Save'}
+              </button>
+            </form>
+          </div>
+
           <div className="border-[1.5px] border-ink rounded bg-paper-deep p-5">
             <p className="font-mono text-xs uppercase tracking-wider text-ink-soft mb-2">
               Data
